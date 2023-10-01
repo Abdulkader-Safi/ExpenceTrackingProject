@@ -6,13 +6,13 @@ enum Category {
   food,
   travel,
   leisure,
-  word,
+  work,
 }
 
 class Expense {
   final String id;
   final String title;
-  final String amount;
+  final double amount;
   final DateTime date;
   final Category category;
 
