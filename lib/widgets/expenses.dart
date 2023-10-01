@@ -1,4 +1,5 @@
 import 'package:exprense_tracker/models/expense.dart';
+import 'package:exprense_tracker/widgets/expenses_list/expenses_list.dart';
 import 'package:flutter/material.dart';
 
 class Expenses extends StatefulWidget {
@@ -45,10 +46,8 @@ class _ExpensesState extends State<Expenses> {
           children: [
             const Text('...'),
             Expanded(
-              child: ListView.builder(
-                itemCount: _registerExpanses.length,
-                itemBuilder: (context, index) =>
-                    Text(_registerExpanses[index].title),
+              child: ExpensesList(
+                expenses: _registerExpanses,
               ),
             ),
             const Text('...'),
