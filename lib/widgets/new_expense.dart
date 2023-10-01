@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:exprense_tracker/models/expense.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -15,6 +16,7 @@ class _NewExpenseState extends State<NewExpense> {
   final _amountController = TextEditingController();
   final formatter = DateFormat.yMd();
   DateTime? _selectedDate;
+  Category _SelectedCategory = Category.food;
 
   @override
   void dispose() {
@@ -81,15 +83,34 @@ class _NewExpenseState extends State<NewExpense> {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 20),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              DropdownButton(
+                value: _SelectedCategory,
+                icon: const Icon(Icons.arrow_downward),
+                items: Category.values
+                    .map(
+                      (e) => DropdownMenuItem(
+                        value: e,
+                        child: Text(e.name.toUpperCase()),
+                      ),
+                    )
+                    .toList(),
+                onChanged: (newCat) {
+                  setState(() {
+                    if (newCat == null) {
+                      return;
+                    }
+                    _SelectedCategory = newCat;
+                  });
+                },
+              ),
+              const Spacer(),
               TextButton(
                 onPressed: () => Navigator.pop(context),
                 child: const Text("Cancel"),
               ),
-              const SizedBox(width: 25),
               ElevatedButton(
                 onPressed: () {
                   log(_titleController.text);
