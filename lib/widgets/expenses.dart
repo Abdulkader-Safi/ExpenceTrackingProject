@@ -1,5 +1,6 @@
 import 'package:exprense_tracker/models/expense.dart';
 import 'package:exprense_tracker/widgets/expenses_list/expenses_list.dart';
+import 'package:exprense_tracker/widgets/new_expense.dart';
 import 'package:flutter/material.dart';
 
 class Expenses extends StatefulWidget {
@@ -18,22 +19,16 @@ class _ExpensesState extends State<Expenses> {
       category: Category.work,
     ),
     Expense(
-      title: 'Flutter Course 2',
+      title: 'BreakFast',
       amount: 29.9,
       date: DateTime.now(),
-      category: Category.work,
+      category: Category.food,
     ),
     Expense(
-      title: 'Flutter Course 3',
+      title: 'Cinema',
       amount: 29.9,
       date: DateTime.now(),
-      category: Category.work,
-    ),
-    Expense(
-      title: 'Flutter Course 4',
-      amount: 29.9,
-      date: DateTime.now(),
-      category: Category.work,
+      category: Category.leisure,
     ),
   ];
 
@@ -42,33 +37,25 @@ class _ExpensesState extends State<Expenses> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Expenses Tracking"),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () {
-              showModalBottomSheet(
-                context: context,
-                builder: (ctx) => const SizedBox(
-                  height: 300,
-                  width: double.infinity,
-                  child: Text("data"),
-                ),
-              );
-            },
-          ),
-        ],
+        leading: IconButton(
+          icon: const Icon(Icons.add),
+          onPressed: () {
+            showModalBottomSheet(
+              context: context,
+              builder: (ctx) => const NewExpense(),
+            );
+          },
+        ),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('...'),
             Expanded(
               child: ExpensesList(
                 expenses: _registerExpanses,
               ),
             ),
-            const Text('...'),
           ],
         ),
       ),
