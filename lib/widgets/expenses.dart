@@ -38,6 +38,12 @@ class _ExpensesState extends State<Expenses> {
     });
   }
 
+  void _removeExpanses(Expense expense) {
+    setState(() {
+      _registerExpanses.remove(expense);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,6 +68,7 @@ class _ExpensesState extends State<Expenses> {
             Expanded(
               child: ExpensesList(
                 expenses: _registerExpanses,
+                onRemoveExpenses: _removeExpanses,
               ),
             ),
           ],
