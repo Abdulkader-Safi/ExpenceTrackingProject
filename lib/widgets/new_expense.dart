@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class NewExpense extends StatefulWidget {
-  const NewExpense({super.key});
+  const NewExpense({super.key, required this.onAddExpense});
+
+  final void Function(Expense expense) onAddExpense;
 
   @override
   State<NewExpense> createState() => _NewExpenseState();
@@ -16,7 +18,7 @@ class _NewExpenseState extends State<NewExpense> {
   final _amountController = TextEditingController();
   final formatter = DateFormat.yMd();
   DateTime? _selectedDate;
-  Category _SelectedCategory = Category.food;
+  Category _selectedCategory = Category.food;
 
   @override
   void dispose() {
@@ -87,7 +89,7 @@ class _NewExpenseState extends State<NewExpense> {
           Row(
             children: [
               DropdownButton(
-                value: _SelectedCategory,
+                value: _selectedCategory,
                 icon: const Icon(Icons.arrow_downward),
                 items: Category.values
                     .map(
@@ -102,7 +104,7 @@ class _NewExpenseState extends State<NewExpense> {
                     if (newCat == null) {
                       return;
                     }
-                    _SelectedCategory = newCat;
+                    _selectedCategory = newCat;
                   });
                 },
               ),
@@ -135,7 +137,19 @@ class _NewExpenseState extends State<NewExpense> {
                         ],
                       ),
                     );
+                    return;
                   }
+
+                  widget.onAddExpense(
+                    Expense(
+                      title: _titleController.text,
+                      amount: enteredAmount,
+                      date: _selectedDate!,
+                      category: _selectedCategory,
+                    ),
+                  );
+
+                  Navigator.pop(context);
                 },
                 child: const Text("Save Expense"),
               )
