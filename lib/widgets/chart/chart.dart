@@ -32,6 +32,9 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isDarkMode =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     return Container(
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -54,7 +57,12 @@ class Chart extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                for (final ele in buckets) const ChartBar(fill: 3),
+                for (final ele in buckets)
+                  ChartBar(
+                    fill: ele.totalExpenses == 0
+                        ? 0
+                        : ele.totalExpenses / maxTotalExpense,
+                  ),
               ],
             ),
           ),
@@ -62,10 +70,18 @@ class Chart extends StatelessWidget {
           Row(
               children: buckets
                   .map(
-                    (e) => const Expanded(
+                    (e) => Expanded(
                       child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 4),
-                        child: Icon(Icons.abc),
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        child: Icon(
+                          categoryIcon[e.category],
+                          color: isDarkMode
+                              ? Theme.of(context).colorScheme.primary
+                              : Theme.of(context)
+                                  .colorScheme
+                                  .primary
+                                  .withOpacity(0.7),
+                        ),
                       ),
                     ),
                   )
