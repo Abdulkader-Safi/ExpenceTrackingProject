@@ -121,8 +121,20 @@ class _NewExpenseState extends State<NewExpense> {
                   if (_titleController.text.trim().isEmpty ||
                       amountIsInvalid ||
                       _selectedDate == null) {
-                    // TODO: show error message to user
                     log("Error");
+                    showDialog(
+                      context: context,
+                      builder: (ctx) => AlertDialog(
+                        title: const Text('error'),
+                        content: const Text('Enter all requested data'),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(ctx),
+                            child: const Text('Done'),
+                          ),
+                        ],
+                      ),
+                    );
                   }
                 },
                 child: const Text("Save Expense"),
