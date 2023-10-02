@@ -1,4 +1,5 @@
 import 'package:exprense_tracker/models/expense.dart';
+import 'package:exprense_tracker/widgets/chart/chart.dart';
 import 'package:exprense_tracker/widgets/expenses_list/expenses_list.dart';
 import 'package:exprense_tracker/widgets/new_expense.dart';
 import 'package:flutter/material.dart';
@@ -65,6 +66,7 @@ class _ExpensesState extends State<Expenses> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Chart(expenses: _registerExpanses),
             Expanded(
               child: ExpensesList(
                 expenses: _registerExpanses,
