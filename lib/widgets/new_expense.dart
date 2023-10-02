@@ -113,8 +113,17 @@ class _NewExpenseState extends State<NewExpense> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  log(_titleController.text);
-                  log(_amountController.text);
+                  final double? enteredAmount =
+                      double.tryParse(_amountController.text);
+                  final bool amountIsInvalid =
+                      enteredAmount == null || enteredAmount <= 0;
+
+                  if (_titleController.text.trim().isEmpty ||
+                      amountIsInvalid ||
+                      _selectedDate == null) {
+                    // TODO: show error message to user
+                    log("Error");
+                  }
                 },
                 child: const Text("Save Expense"),
               )
