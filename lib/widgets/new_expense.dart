@@ -1,6 +1,8 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:exprense_tracker/models/expense.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -19,6 +21,36 @@ class _NewExpenseState extends State<NewExpense> {
   final formatter = DateFormat.yMd();
   DateTime? _selectedDate;
   Category _selectedCategory = Category.food;
+
+  void _showDialog() {
+    Platform.isIOS
+        ? showCupertinoDialog(
+            context: context,
+            builder: (ctx) => CupertinoAlertDialog(
+              title: const Text('error'),
+              content: const Text('Enter all requested data'),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(ctx),
+                  child: const Text('Done'),
+                ),
+              ],
+            ),
+          )
+        : showDialog(
+            context: context,
+            builder: (ctx) => AlertDialog(
+              title: const Text('error'),
+              content: const Text('Enter all requested data'),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(ctx),
+                  child: const Text('Done'),
+                ),
+              ],
+            ),
+          );
+  }
 
   @override
   void dispose() {
@@ -127,19 +159,7 @@ class _NewExpenseState extends State<NewExpense> {
                           amountIsInvalid ||
                           _selectedDate == null) {
                         log("Error");
-                        showDialog(
-                          context: context,
-                          builder: (ctx) => AlertDialog(
-                            title: const Text('error'),
-                            content: const Text('Enter all requested data'),
-                            actions: [
-                              TextButton(
-                                onPressed: () => Navigator.pop(ctx),
-                                child: const Text('Done'),
-                              ),
-                            ],
-                          ),
-                        );
+                        _showDialog();
                         return;
                       }
 
