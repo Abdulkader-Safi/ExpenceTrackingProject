@@ -64,6 +64,8 @@ class _ExpensesState extends State<Expenses> {
           icon: const Icon(Icons.add),
           onPressed: () {
             showModalBottomSheet(
+              useSafeArea: true,
+              isScrollControlled: true,
               context: context,
               builder: (ctx) => NewExpense(
                 onAddExpense: _addExpanses,
